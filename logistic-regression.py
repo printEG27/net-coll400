@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, confusion_matrix,precision_score, recall_score,f1_score,roc_curve, roc_auc_score
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 # Load data from Excel
@@ -13,11 +13,6 @@ df = pd.read_excel('allstats.xlsx', sheet_name='Sheet1')
 le = LabelEncoder()
 df['label_encoded'] = le.fit_transform(df['Label'])
 class_names = le.classes_
-
-# Train/test split
-n = len(df)
-train_end = int(0.6 * n)
-val_end = int(0.8 * n)
 
 feature_cols = ['Packet count', 
                 'Total packet length', 
@@ -39,13 +34,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42,
     stratify=y
 )
-
-# Normalize features
-X_mean = X_train.mean(axis=0)
-X_std  = X_train.std(axis=0) + 1e-8
-
-X_train = (X_train - X_mean) / X_std
-X_test  = (X_test  - X_mean) / X_std
 
 # Fit logistic regression on training set
 regression = LogisticRegression(
