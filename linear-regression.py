@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import accuracy_score, confusion_matrix,precision_score, recall_score,f1_score,roc_curve, roc_auc_score
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
 
 # Load data from Excel
 df = pd.read_excel('allstats.xlsx', sheet_name='Sheet1')
@@ -12,11 +13,6 @@ df = pd.read_excel('allstats.xlsx', sheet_name='Sheet1')
 le = LabelEncoder()
 df['label_encoded'] = le.fit_transform(df['Label'])
 class_names = le.classes_
-
-# Train/test split (60/20/20 like the example report he gave us)
-n = len(df)
-train_end = int(0.6 * n)
-val_end = int(0.8 * n)
 
 feature_cols = ['Packet count', 
                 'Total packet length', 
@@ -31,13 +27,12 @@ X = df[feature_cols].values
 y = df['label_encoded'].values
 
 # Shuffle before splitting
-np.random.seed(42)
-shuffle_idx = np.random.permutation(n)
-X, y = X[shuffle_idx], y[shuffle_idx]
-
-train_end = int(0.6 * n)
-X_train, y_train = X[:train_end], y[:train_end]
-X_test,  y_test  = X[train_end:], y[train_end:]
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.4,
+    random_state=42,
+    stratify=y
+)
 
 # Fit linear regression on training set
 slr = LinearRegression()
