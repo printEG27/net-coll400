@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import load_iris
 from sklearn.preprocessing import LabelEncoder
 
-
+# Import the data
 df = pd.read_excel('allstats.xlsx', sheet_name='Sheet1')
 
 le = LabelEncoder()
@@ -29,15 +29,42 @@ feature_cols = ['Packet count',
 X = df[feature_cols].values
 y = df['label_encoded'].values
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42, stratify=y)
+# Split train/test data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, 
+    test_size=0.5, 
+    random_state=42, 
+    stratify=y)
 
-classifier = RandomForestClassifier(n_estimators=100, random_state=42)
+# Initialize classifier
+classifier = RandomForestClassifier(
+    max_depth=1000,
+    n_estimators=100, 
+    random_state=42)
 classifier.fit(X_train, y_train)
+
+# predict!
 y_pred = classifier.predict(X_test)
 
 model_accuracy  = accuracy_score(y_pred, y_test)
 print("Accuracy:",model_accuracy)
 
+# Make the confusion matrix
+conf_matrix = confusion_matrix(y_test, y_pred)
+
+# Plot the confusion matrix
+plt.figure(figsize=(8, 6))
+sns.heatmap(conf_matrix, annot=True, fmt='g', cmap='Blues', cbar=False, 
+            xticklabels=class_names, yticklabels=class_names)
+
+plt.title('Confusion Matrix Heatmap')
+plt.xlabel('Predicted Labels')
+plt.ylabel('True Labels')
+
+plt.savefig('random_tree_confusion_matrix.png', dpi=150)
+plt.show()
+
+# Plot predicted vs actual and show 
 fig, ax = plt.subplots(figsize=(10, 5))
 
 x_axis = np.arange(len(y_test))
@@ -54,3 +81,4 @@ ax.legend(loc='upper right')
 plt.tight_layout()
 plt.savefig('random_tree_plot.png', dpi=150)
 plt.show()
+
