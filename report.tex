@@ -39,14 +39,7 @@
 }
 
 \begin{abstract}
-    This project addresses the task of monitoring and classifying
-network traffic by its originating website, with the goal of
-enhancing network management, security, and performance
-optimization. We collected a dataset of traffic records from
-five popular websites: GitHub, Backloggd, Instagram, Letterboxd,
-and Weather, and employed three machine learning models
-for classification: Linear Regression, Logistic Regression, and
-Random Forest. Comprehensive evaluation showed that the
+    This project addresses the problem of classifying network traffic by its website of origin. The goal of this classification is to improve providers' ability to manage their networks based on users' activity. The traffic records we analyzed come from five websites – Backloggd, Github, Letterboxd, Reddit, and weather.com - and, based on nine characteristics, we classified these records using the Linear Regression, Logistic Regression, and Random Forest machine learning models.  Comprehensive evaluation showed that the
 Random Forest model achieved the highest accuracy (X)
 and Macro F1 score (X), demonstrating its ability to handle
 complex relationships within the dataset. The project
@@ -137,8 +130,7 @@ process.
     \label{fig:2}
 \end{figure}
 \subsubsection{Data Collection}
-We initiate the data collection pro
-cess by opening Wireshark, a network protocol analyzer,
+We initiate the data collection process by opening Wireshark, a network protocol analyzer,
 and configuring filters to capture traffic from specific web
 sites: GitHub, LetterBoxd, Backloggd, Reddit, and Weather. This
 diverse selection of sites generates unique traffic patterns
@@ -150,6 +142,7 @@ We repeat this process for each of the five websites, creating
 a comprehensive raw dataset. The variety of captured packets ensures a representative sample of each website’s traffic.
 
 \subsubsection{Feature Engineering}
+% Might be good to have a figure showing feature importances!
 After collecting a sufficient number of data records, each consisting of multiple packets, we
 proceed to feature engineering. The raw data cannot be directly used for training, thus we extract eight key features from each record:\\\\
 • \textbf{Packet Count:} This feature indicates the total number
@@ -160,6 +153,7 @@ size of all packets in a record, encompassing both headers
 and payloads. It provides a measure of the data through
 put and is crucial for understanding the traffic load and
 capacity requirements.\\\\
+• \textbf{Packet Length Variance:} This feature corresponds to the sample variance of all packet lengths within a capture. It quantifies the diversity of packet lengths in the record.\\\\
 • \textbf{Average Packet Interval:} This feature calculates the
 mean time difference between consecutive packets, of inferring insights into the temporal distribution of traffic. A
 higher average interval might indicate sporadic traffic,
@@ -172,6 +166,7 @@ traffic.\\\\
 shortest time gap between two packets, indicating the
 speed at which data is transferred during active periods. It reflects the network’s latency and the website’s
 responsiveness.\\\\
+• \textbf{Packet Interval Variance:} This feature corresponds to the sample variance of all time intervals between packets. It quantifies the diversity of intervals that elapse between two packets.\\\\
 • \textbf{Average Packet Length:} This feature calculates the
 mean size of all packets in a record, offering insights into
 the average data volume transferred per packet. It can
@@ -245,7 +240,7 @@ and its assumptions lay the groundwork for initial model validation. This makes 
 \section{Evaluation}
 In this section, we perform an in-depth evaluation of our models and their performance on the dataset.
 \subsection{Datasets}
-After processing the collected data, we obtained the dataset. The train, validation, and test sets were
+After processing the collected data, we obtained the dataset. The train and test sets were
 split with a ratio of 5:5.
 \subsection{Evaluation Metrics}
 We use two primary metrics to evaluate the models: Accuracy
@@ -297,6 +292,7 @@ effective at capturing complex relationships in the data.
     \label{tab:placeholder}
 \end{table}
 \subsection{Visualization Results}
+% Confusion matrices here
 To evaluate how each model’s predictions align with actual
 values, we visualize the predictions and real values for each
 model: Linear Regression (Fig 4), Logistic Regression (Fig 5),
