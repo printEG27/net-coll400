@@ -2,8 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+from sklearn import preprocessing
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 
 # Load data from Excel
@@ -19,17 +20,20 @@ feature_cols = ['Packet count',
                 'Average packet length',
                 'Minimum packet length', 
                 'Maximum packet length', 
-                'Most common packet length', 
+                'Packet length variance', 
                 'Avg. packet interval', 
                 'Min. packet interval', 
-                'Max. packet interval']
+                'Max. packet interval',
+                'Packet itvl variance']
+
 X = df[feature_cols].values
+preprocessing.normalize(X)
 y = df['label_encoded'].values
 
 # Shuffle before splitting
 X_train, X_test, y_train, y_test = train_test_split(
     X, y,
-    test_size=0.4,
+    test_size=0.5,
     random_state=42,
     stratify=y
 )
@@ -42,9 +46,11 @@ slr.fit(X_train, y_train)
 y_pred_raw = slr.predict(X_test)
 y_pred = np.clip(np.round(y_pred_raw).astype(int), 0, len(class_names) - 1)
 
-# Calculate accuracy
+# Calculate accuracy and Macro F1 score
 model_accuracy  = accuracy_score(y_pred,y_test)
 print("Accuracy:",model_accuracy)
+macro_f1 = f1_score(y_test, y_pred, average='weighted')
+print("Macro F1:",macro_f1)
 
 # Make plot
 fig, ax = plt.subplots(figsize=(10, 5))
