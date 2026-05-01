@@ -4,10 +4,9 @@ import seaborn as sns
 import numpy as np
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn import preprocessing
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import load_iris
 from sklearn.preprocessing import LabelEncoder
 
 # Import the data
@@ -22,11 +21,17 @@ feature_cols = ['Packet count',
                 'Average packet length',
                 'Minimum packet length', 
                 'Maximum packet length', 
-                'Most common packet length', 
+                'Packet length variance', 
                 'Avg. packet interval', 
                 'Min. packet interval', 
-                'Max. packet interval']
+                'Max. packet interval',
+                'Packet itvl variance'
+                ]
+
+# normalize the features
 X = df[feature_cols].values
+preprocessing.normalize(X)
+
 y = df['label_encoded'].values
 
 # Split train/test data
@@ -42,6 +47,17 @@ classifier = RandomForestClassifier(
     n_estimators=100, 
     random_state=42)
 classifier.fit(X_train, y_train)
+
+# Get feature importances
+importances = classifier.feature_importances_
+
+# Create a DataFrame for better visualization
+importance_df = pd.DataFrame({
+    'Feature': feature_cols,
+    'Importance': importances
+}).sort_values(by='Importance', ascending=False)
+
+print(importance_df)
 
 # predict!
 y_pred = classifier.predict(X_test)
