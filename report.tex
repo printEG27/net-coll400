@@ -64,14 +64,14 @@ for future developments.
 \section{Introduction}
     Monitoring and classifying network traffic are critical tasks
 for maintaining efficient network management, security, and
-performance optimization [7]. The proliferation of diverse
+performance optimization [1]. The proliferation of diverse
 online services necessitates robust methods to categorize
 traffic patterns and accurately identify their sources [2]. This
 project aims to develop a machine learning model to classify
 network traffic by its originating website, leveraging the
 diversity of traffic patterns from different online services.
 Accurate classification of network traffic patterns has significant
-real-world implications [4]. It facilitates network
+real-world implications. It facilitates network
 management by identifying traffic sources and patterns, helps
 security by detecting unusual behaviors, and optimizes performance
 by ensuring balanced traffic flows. These capabilities
@@ -79,10 +79,10 @@ are essential for managing and protecting modern
 networks.\\
 We collected a dataset of traffic records from five popular
 websites: GitHub, Backloggd, Instagram, Letterboxd,
-and Weather. This dataset was split into training, validation, and test sets
-in a 6:2:2 ratio. We employed three models for classification:
+and Weather. This dataset was split into training, and test sets
+in a 5:5 ratio. We employed three models for classification:
 Linear Regression [6], Logistic Regression [5], and Random
-Forest [1].\\
+Forest [4].\\
 Comprehensive evaluation showed that the Random Forest
 model achieved the highest accuracy (X) and Macro F1
 score (X), outperforming the other models. This demonstrates
@@ -113,7 +113,7 @@ To effectively monitor and analyze computer network traffic and classify it by w
 preparation process as shown in Fig 1.
 
 \subsubsection{Tool Selection}
-In this project, we use Wireshark [3]
+In this project, we use Wireshark [2]
 (as shown in Fig 2), a highly regarded and versatile network
 protocol analyzer, to collect and analyze network traffic data.
 Wireshark offers a robust suite of features that allow us to
@@ -130,7 +130,13 @@ graphical user interface offers an intuitive way to explore
 and interpret network traffic data. The interface provides features such as real-time packet capture, filtering options, and
 detailed views of packet content, streamlining our analysis
 process.
-
+\begin{figure}
+    \centering
+    \includegraphics[width=0.99\linewidth]{ScreenshotWireShark.png}
+    \caption{The interface of Wireshark, demonstrating
+its comprehensive design.}
+    \label{fig:2}
+\end{figure}
 \subsubsection{Data Collection}
 We initiate the data collection pro
 cess by opening Wireshark, a network protocol analyzer,
@@ -143,15 +149,11 @@ gather traffic data. This browsing session results in a single
 data record containing all packets captured during that time.
 We repeat this process for each of the five websites, creating
 a comprehensive raw dataset. The variety of captured packets ensures a representative sample of each website’s traffic.
-The data record, as illustrated in Figure 3, comprises 1423
-packets, with details including Time, Source, Destination,
-Protocol, and Length, providing a detailed snapshot of the
-network traffic.
 
 \subsubsection{Feature Engineering}
 After collecting a sufficient number of data records, each consisting of multiple packets, we
-proceed to feature engineering. The raw data cannot be directly used for training, thus we extract nine key features from each record, focusing on the dimensions of Time and
-Length (as shown in Fig 4):\\\\
+proceed to feature engineering. The raw data cannot be directly used for training, thus we extract nine key features from each record, focusing on the dimensions of \textbf{Time and
+Length (as shown in Fig 3)}:\\\\
 • \textbf{Packet Count:} This feature indicates the total number
 of packets in each record, reflecting the overall communication volume. It’s a key indicator of the traffic intensity
 and can reveal insights into the website’s usage patterns.\\\\
@@ -183,21 +185,12 @@ reveal the presence of large files or media content.\\\\
 • \textbf{Minimum Packet Length:} This feature captures the
 size of the smallest packet in a record, reflecting minimal
 data transfer requirements. It can indicate small, frequent
-communications or requests.\\\\
-• \textbf{Most Common Packet Length:} This feature represents
-the size that appears most frequently among the packets,
-revealing the typical packet size in the record. This can
-provide insights into the website’s primary data types
-and content nature.
-These features provide valuable insights into the nature
-of the traffic and aid in the subsequent model training phase,
-allowing for the automatic classification of network traffic
-by its originating website.
+communications or requests.
 
 \subsection{Employed Method}
 For our project on monitoring and analyzing network traffic,
 particularly from popular internet websites, and classifying
-the originating website, we employ the Random Forest algorithm [1]. This algorithm is integral to our solution due to its
+the originating website, we employ the Random Forest algorithm [4]. This algorithm is integral to our solution due to its
 flexibility, robustness, and strong performance in handling
 complex classification tasks.
 
@@ -206,7 +199,7 @@ complex classification tasks.
 2.2.1 Random Forest. Random Forest is an ensemble learning method primarily used for classification and regression
 tasks. It operates by constructing multiple decision trees during the training phase and aggregating their outputs to make
 a final decision.
-The process of Random Forest (as shown in Fig 5) is:\\\\
+The process of Random Forest is:\\\\
 • \textbf{Building the Forest:} During training, multiple decision
 trees are generated. Each tree is built from a bootstrapped
 sample of the training dataset. In each tree, a subset of
@@ -228,19 +221,11 @@ diverse and complex features,such as protocols and packet
 lengths. Random Forest’s decision trees can efficiently
 capture interactions between these features, producing
 accurate classifications.\\\\
-• \textbf{Generalization:} Due to its ensemble nature, Random For
-est generalizes well to unseen data. This makes it highly
-suitable for our application, where network traffic pat
-terns can vary significantly between different websites
-and even for the same website over time.\\\\
 • \textbf{Interpretability:} While individual decision trees may be
 challenging to interpret, Random Forest offers useful in
 sights into feature importance. This capability is valuable
 for understanding which features, such as protocol type or packet length, contribute most to distinguishing traffic
 from different websites.\\\\
-• \textbf{Scalability:} The Random Forest algorithm is highly scalable and can handle large datasets. This is particularly
-important for our project, as network traffic data can
-accumulate rapidly, necessitating a model that can efficiently handle large volumes of data.
 \subsubsection{Baselines}
  We compared two baselines:
 • Linear Regression [6] serves as a baseline model for
@@ -262,9 +247,8 @@ and its assumptions lay the groundwork for initial model validation. This makes 
 \section{Evaluation}
 In this section, we perform an in-depth evaluation of our models and their performance on the dataset.
 \subsection{Datasets}
-After processing the collected data, we obtained the dataset
-shown in Table 1. The train, validation, and test sets were
-split with a ratio of 6:2:2.
+After processing the collected data, we obtained the dataset. The train, validation, and test sets were
+split with a ratio of 5:5.
 \subsection{Evaluation Metrics}
 We use two primary metrics to evaluate the models: Accuracy
 and Macro F1 score. These metrics provide a comprehensive
@@ -294,27 +278,40 @@ mean of precision and recall for each class, and then averaging these scores acr
 \]
 
 \subsection{Evaluation Results}
-The results in Table 2 show that the Random Forest model
-achieves the highest accuracy (0.91) and Macro F1 score
-(0.89), outperforming both Linear and Logistic Regression
+The results in Table 1 show that the Random Forest model
+achieves the highest accuracy (\textbf{X}) and Macro F1 score
+(\textbf{X}), outperforming both Linear and Logistic Regression
 models. This indicates that the Random Forest model is more
 effective at capturing complex relationships in the data.
+
+\begin{table}
+    \centering
+    \begin{tabular}{ccc}
+    \hline
+        Model & Accuracy  & Macro F1 Score \\
+        \hline
+        Linear Regression &  & \\
+        Logistic Regression &  & \\
+       Random Forest &  &  \\
+       \hline
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:placeholder}
+\end{table}
 \subsection{Visualization Results}
 To evaluate how each model’s predictions align with actual
 values, we visualize the predictions and real values for each
-model: Linear Regression (Fig 6), Logistic Regression (Fig 7),
-and Random Forest (Fig 8).
+model: Linear Regression (Fig 4), Logistic Regression (Fig 5),
+and Random Forest (Fig 6).
 The results show that the Random Forest model exhibits
-the closest alignment between predictions and actual val
-ues, reinforcing its superior performance observed in the
+the closest alignment between predictions and actual values, reinforcing its superior performance observed in the
 quantitative metrics.
 \section{Discussion \& Future Work}
 
 \subsection{Interpretation of Results}
 Three models were tested: Linear Regression, Logistic Regression, and Random Forest. The results indicate that Random
-Forest outperformed both Linear and Logistic Regression in
-terms of both Accuracy and Macro F1 score. Specifically, Random Forest achieved an accuracy of 0.91 and a Macro F1 score of 0.89, compared to Logistic Regression’s accuracy of 0.83
-and Macro F1 score of 0.84. This performance gap highlights
+Forest outperformed both Linear and Logistic Regression in terms of both Accuracy and Macro F1 score. Specifically, Random Forest achieved an accuracy of \textbf{X} and a Macro F1 score of \textbf{x}, compared to Logistic Regression’s accuracy of \textbf{X}
+and Macro F1 score of \textbf{X}. This performance gap highlights
 Random Forest’s ability to capture complex relationships in
 the data, making it particularly suitable for network traffic
 classification, where patterns can vary significantly.
@@ -378,6 +375,7 @@ providing further insights into their effectiveness.
 This project serves as a foundation for future developments in network traffic analysis, with practical implications for real-world systems and applications. By integrating
 machine learning models into network monitoring, we can
 enhance performance, security, and management.
+
 % Note from the CFP that this section must include a statement about
 % ethical issues; papers that do not include such a statement may be
 % rejected.
@@ -387,5 +385,13 @@ enhance performance, security, and management.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{refs}
+\begin{enumerate}
+\item[1] K. Kumar, M. Punia, and Vandana. 2023. Network traffic classification techniques: A survey. In Proceedings of the 2023 Seventh International Conference on Image Information Processing (ICIIP). IEEE, Solan, India, 205–211. https://doi.org/10.1109/ICIIP61524.2023.10537766
 
+\item[2] Wireshark Foundation. 2024. Wireshark. https://www.wireshark.org/ Available: https://www.wireshark.org/ 
+\item[3] J. Hao and T. K. Ho. 2019. Machine learning made easy: A review of “Scikit-learn” package in Python programming language. Journal of Educational and Behavioral Statistics 44, 3 (2019), 348–361. http://www.jstor.org/stable/45278427
+
+\item[4] Scikit-learn Developers. n.d. sklearn.ensemble.RandomForestClassifier. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+
+\end{enumerate}
 \end{document}
