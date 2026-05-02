@@ -40,8 +40,8 @@
 
 \begin{abstract}
     This project addresses the problem of classifying network traffic by its website of origin. The goal of this classification is to improve providers' ability to manage their networks based on users' activity. The traffic records we analyzed come from five websites – Backloggd, Github, Letterboxd, Reddit, and weather.com - and, based on nine characteristics, we classified these records using the Linear Regression, Logistic Regression, and Random Forest machine learning models.  Comprehensive evaluation showed that the
-Random Forest model achieved the highest accuracy (X)
-and Macro F1 score (X), demonstrating its ability to handle
+Random Forest model achieved the highest accuracy (0.72)
+and Macro F1 score (0.723), demonstrating its ability to handle
 complex relationships within the dataset. The project
 contributes to the field of network traffic classification by
 demonstrating the feasibility of integrating machine learning
@@ -74,11 +74,11 @@ We collected a dataset of traffic records from five popular
 websites: GitHub, Backloggd, Instagram, Letterboxd,
 and Weather. This dataset was split into training, and test sets
 in a 5:5 ratio. We employed three models for classification:
-Linear Regression [6], Logistic Regression [5], and Random
+Linear Regression [5], Logistic Regression [6], and Random
 Forest [4].\\
 Comprehensive evaluation showed that the Random Forest
-model achieved the highest accuracy (X) and Macro F1
-score (X), outperforming the other models. This demonstrates
+model achieved the highest accuracy (0.72) and Macro F1
+score (0.723), outperforming the other models. This demonstrates
 its ability to handle complex relationships within the
 dataset, facilitating accurate classification.\\
 The project’s contribution lies in its integration of machine
@@ -221,7 +221,7 @@ for understanding which features, such as protocol type or packet length, contri
 from different websites.\\\\
 \subsubsection{Baselines}
  We compared two baselines:
-• Linear Regression [6] serves as a baseline model for
+• Linear Regression [5] serves as a baseline model for
 continuous numerical predictions due to its simplicity,
 interpret-ability, and straightforward implementation. It
 provides a linear relationship between the dependent
@@ -232,7 +232,7 @@ predictions. Its assumptions, though restrictive, provide
 a useful framework for initial model evaluation, making
 it a reliable starting point for comparing more complex
 models in regression tasks.
-•Logistic Regression[5]is chosen as a base line model for
+•Logistic Regression[6]is chosen as a base line model for
 binary and categorical classification tasks due to its simplicity, interpretability, and effectiveness in probability
 based predictions. Its logistic function directly maps features to probabilities, offering clear insight into the likelihood of a particular outcome. Maximum Likelihood
 Estimation provides a robust way to fit the model to data,
@@ -272,8 +272,8 @@ mean of precision and recall for each class, and then averaging these scores acr
 
 \subsection{Evaluation Results}
 The results in Table 1 show that the Random Forest model
-achieves the highest accuracy (\textbf{X}) and Macro F1 score
-(\textbf{X}), outperforming both Linear and Logistic Regression
+achieves the highest accuracy (0.72) and Macro F1 score
+(0.723), outperforming both Linear and Logistic Regression
 models. This indicates that the Random Forest model is more
 effective at capturing complex relationships in the data.
 
@@ -283,9 +283,9 @@ effective at capturing complex relationships in the data.
     \hline
         Model & Accuracy  & Macro F1 Score \\
         \hline
-        Linear Regression &  & \\
-        Logistic Regression &  & \\
-       Random Forest &  &  \\
+        Linear Regression &  0.4& 0.348\\
+        Logistic Regression &  0.52& 0.52\\
+       Random Forest &  0.72& 0.723 \\
        \hline
     \end{tabular}
     \caption{Caption}
@@ -301,11 +301,28 @@ The results show that the Random Forest model exhibits
 the closest alignment between predictions and actual values, reinforcing its superior performance observed in the
 quantitative metrics.
 \section{Discussion \& Future Work}
-
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{linear_regression_plot.png}
+    \caption{Linear Regression Model}
+    \label{fig:4}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{logistic_regression_plot.png}
+    \caption{Logistic Regression Model}
+    \label{fig:5}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{random_tree_plot.png}
+    \caption{Random Forest Model}
+    \label{fig:6}
+\end{figure}
 \subsection{Interpretation of Results}
 Three models were tested: Linear Regression, Logistic Regression, and Random Forest. The results indicate that Random
-Forest outperformed both Linear and Logistic Regression in terms of both Accuracy and Macro F1 score. Specifically, Random Forest achieved an accuracy of \textbf{X} and a Macro F1 score of \textbf{x}, compared to Logistic Regression’s accuracy of \textbf{X}
-and Macro F1 score of \textbf{X}. This performance gap highlights
+Forest outperformed both Linear and Logistic Regression in terms of both Accuracy and Macro F1 score. Specifically, Random Forest achieved an accuracy of 0.72 and a Macro F1 score of 0.723, compared to Logistic Regression’s accuracy of 0.52
+and Macro F1 score of 0.52. This performance gap highlights
 Random Forest’s ability to capture complex relationships in
 the data, making it particularly suitable for network traffic
 classification, where patterns can vary significantly.
