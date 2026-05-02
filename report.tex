@@ -135,7 +135,7 @@ and configuring filters to capture traffic from specific web
 sites: GitHub, LetterBoxd, Backloggd, Reddit, and Weather. This
 diverse selection of sites generates unique traffic patterns
 representative of popular online services. We visit each web
-site, navigating its pages for a minimum of one minute to
+site, navigating its pages for approximately one minute to
 gather traffic data. This browsing session results in a single
 data record containing all packets captured during that time.
 We repeat this process for each of the five websites, creating
@@ -144,7 +144,7 @@ a comprehensive raw dataset. The variety of captured packets ensures a represent
 \subsubsection{Feature Engineering}
 % Might be good to have a figure showing feature importances!
 After collecting a sufficient number of data records, each consisting of multiple packets, we
-proceed to feature engineering. The raw data cannot be directly used for training, thus we extract eight key features from each record:\\\\
+proceed to feature engineering. The raw data cannot be directly used for training, thus we extract nine key features from each record:\\\\
 • \textbf{Packet Count:} This feature indicates the total number
 of packets in each record, reflecting the overall communication volume. It’s a key indicator of the traffic intensity
 and can reveal insights into the website’s usage patterns.\\\\
@@ -191,7 +191,7 @@ complex classification tasks.
 \subsubsection{Random Forest}
 2.2.1 Random Forest. Random Forest is an ensemble learning method primarily used for classification and regression
 tasks. It operates by constructing multiple decision trees during the training phase and aggregating their outputs to make
-a final decision.
+a final decision. Our random forest model has 100 estimators and a maximum depth of 1,000.
 The process of Random Forest is:\\\\
 • \textbf{Building the Forest:} During training, multiple decision
 trees are generated. Each tree is built from a bootstrapped
@@ -267,7 +267,7 @@ are correctly identified as positive.
 The \textbf{Macro F1 Score} is calculated by taking the harmonic
 mean of precision and recall for each class, and then averaging these scores across all classes:
 \[
-\text{Macro F1} = \frac{1}{n}\sum_{i=1}^{n}\frac{\text{2 x Precision\_{i} x Recall\_i}}{\text{Precision\_{i} x Recall\_i}}
+\text{Macro F1} = \frac{1}{n}\sum_{i=1}^{n}\frac{\text{2 * Precision$_i$ * Recall$_i$}}{\text{Precision$_i$ * Recall$_i$}}
 \]
 
 \subsection{Evaluation Results}
@@ -295,11 +295,12 @@ effective at capturing complex relationships in the data.
 % Confusion matrices here
 To evaluate how each model’s predictions align with actual
 values, we visualize the predictions and real values for each
-model: Linear Regression (Fig 4), Logistic Regression (Fig 5),
-and Random Forest (Fig 6).
+model: Linear Regression (Fig 3), Logistic Regression (Fig 4),
+and Random Forest (Fig 5).
 The results show that the Random Forest model exhibits
 the closest alignment between predictions and actual values, reinforcing its superior performance observed in the
 quantitative metrics.
+We also visualize the confusion matrix for our Random Forest model (Fig 6) to further understand the accuracy of its predicted labels, and to determine which websites were most challenging for the model to classify. The model had the most trouble classifying data from Backloggd correctly, but overall performed well, making a majority of predictions correctly.
 \section{Discussion \& Future Work}
 \begin{figure}
     \centering
@@ -318,6 +319,12 @@ quantitative metrics.
     \includegraphics[width=0.75\linewidth]{random_tree_plot.png}
     \caption{Random Forest Model}
     \label{fig:6}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{random_tree_confusion_matrix.png}
+    \caption{The confusion matrix for the Random Forest model with the given dataset}
+    \label{fig:7}
 \end{figure}
 \subsection{Interpretation of Results}
 Three models were tested: Linear Regression, Logistic Regression, and Random Forest. The results indicate that Random
